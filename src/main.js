@@ -31,7 +31,15 @@ let config = {
     },
     width: 1200,
     height: 800,
-    scene: [Load, Platformer]
+    scale: {
+        mode: Phaser.Scale.FIT, // Or Phaser.Scale.ENVELOP, Phaser.Scale.RESIZE
+        autoCenter: Phaser.Scale.CENTER_BOTH // This will center the canvas
+    },
+    fps: {
+        target: 60, // Set the target frame rate to 60 FPS
+        forceSetTimeOut: true
+    },
+    scene: [Load, Level1, SummaryScene]
 }
 
 var cursors;

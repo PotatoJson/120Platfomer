@@ -34,12 +34,30 @@ class Load extends Phaser.Scene {
             frameHeight: 48
         });
 
+        this.load.audio("collectibleSound", "collectible.wav",{
+            loop: false,
+            volume: 0.5
+        });
+
         // Load tilemap information
-        this.load.image("tilemap_tiles", "monochrome_tilemap_packed.png");                         // Packed tilemap
+        this.load.spritesheet("tilemap_tiles", "monochrome_tilemap_packed.png", {
+            frameWidth: 16,
+            frameHeight: 16
+            // You can also add 'endFrame: 399' if you want to be explicit,
+            // as your Tiled map indicates a tilecount of 400 (frames 0-399).
+            // Phaser usually figures this out if margin and spacing are 0.
+        });                         // Packed tilemap
         this.load.tilemapTiledJSON("playground", "1bit_playground.tmj");   // Tilemap in JSON
     }
 
     create() {
+        let graphics = this.add.graphics();
+        graphics.fillStyle(0xffffff, 1); // White color
+        // You can adjust the size; 3x3 or 4x4 is usually good for small, crisp particles
+        graphics.fillRect(0, 0, 3, 3);
+        graphics.generateTexture('whitePixelParticle', 3, 3);
+        graphics.destroy(); // Clean up the graphics object
+        
         this.anims.create({
             key: 'run',
             frames: this.anims.generateFrameNumbers("playerRun", { start: 0, end: 7 }),
@@ -89,7 +107,7 @@ class Load extends Phaser.Scene {
             repeat: 0
         });
          // ...and pass to the next Scene
-         this.scene.start("platformerScene");
+         this.scene.start("level1Scene");
     }
 
     // Never get here since a new scene is started in create()
